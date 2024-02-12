@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        user_name: $user_name
+        group_name: $group_name
+    image: $pj_name.app
+    container_name: $pj_name.app
+    tty: true
+    init: true
+    privileged: true
+    network_mode: "host"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu, utility, compute, video]
+    volumes:
+      - .:/home/$user_name/workspace
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
+      - ~/.Xauthority:/home/$user_name/.Xauthority
+      - /run/user/1000/bus:/run/user/1000/bus
+      - /run/snapd.socket:/run/snapd.socket
+    working_dir: /home/$user_name/workspace
+    environment:
+      - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - DISPLAY=localhost:10.0
+      - DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+

@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "docker-chrome"
+version = "0.1.0"
+description = "backend experiment project"
+authors = ["tkosht"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "app"}]
+
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+
+# crawler
+scrapy = "*"
+selenium = "*"
+webdriver_manager = "*"
+matplotlib = "^3.8.2"
+
+[tool.poetry.dev-dependencies]
+# for sqa
+pudb = "*"
+pylint = "*"
+flake8 = "*"
+black = "*"
+coverage = "*"
+pytest = "*"
+pytest-flake8 = "*"
+pytest-cov = "*"
+pytest-xdist = "*"
+pytest-html = "*"
+# docutils==0.15
+Sphinx = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+

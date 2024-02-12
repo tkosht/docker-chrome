@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "docker-chrome"
 version = "0.1.0"
-description = "backend experiment project"
+description = "docker chrome project"
 authors = ["tkosht"]
 license = "MIT"
 readme = "README.md"

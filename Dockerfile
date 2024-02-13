@@ -87,6 +87,3 @@ LABEL maintainer="tkosht <takehito.oshita.business@gmail.com>"
 RUN sudo apt-get --fix-missing install -y \
         vim tmux git jq sqlite3
 
-#         libgeos-dev libsnappy-dev fontconfig fonts-ipaexfont fonts-ipafont \
-#         libopenmpi-dev
-

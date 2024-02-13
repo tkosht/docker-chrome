@@ -5,6 +5,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+      target: $target
       args:
         user_name: $user_name
         group_name: $group_name

@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:22.04 AS prod
 
 LABEL maintainer="tkosht <takehito.oshita.business@gmail.com>"
 
@@ -7,11 +7,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -y && apt-get upgrade -y \
     && apt-get --fix-missing install -y sudo build-essential autoconf cmake \
-        vim tmux tzdata locales dialog git openssh-server bash-completion \
-        jq sqlite3 curl nodejs npm default-jre unzip \
+        curl nodejs npm default-jre unzip tzdata locales dialog \
         libgeos-dev libsnappy-dev fontconfig fonts-ipaexfont fonts-ipafont \
         libopenmpi-dev \
+        libmecab-dev mecab mecab-ipadic-utf8 mecab-utils file \
     && localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
+
+#         vim tmux tzdata locales dialog git bash-completion jq sqlite3 \
+
 
 # for google-chrome
 # # driver and chrome browser
@@ -44,7 +47,7 @@ ENV LANG="ja_JP.UTF-8" \
 # MeCab
 WORKDIR /tmp
 
-RUN python -m pip install --upgrade pip==21.0.1
+RUN python -m pip install --upgrade pip matplotlib
 
 # upgrade system
 RUN apt-get upgrade -y \
@@ -76,4 +79,14 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=dialog
+
+
+# ==========
+FROM prod AS dev
+LABEL maintainer="tkosht <takehito.oshita.business@gmail.com>"
+RUN sudo apt-get --fix-missing install -y \
+        vim tmux git jq sqlite3
+
+#         libgeos-dev libsnappy-dev fontconfig fonts-ipaexfont fonts-ipafont \
+#         libopenmpi-dev
 
